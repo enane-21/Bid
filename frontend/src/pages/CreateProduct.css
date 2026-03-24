@@ -1,0 +1,17 @@
+.create-product {
+    padding: 40px 20px;
+    max-width: 800px;
+}
+
+.create-product h1 {
+    margin-bottom: 30px;
+}
+
+.create-product form {
+    max-width: 600px;
+}
+
+.create-product .btn {
+    width: 100%;
+    margin-top: 20px;
+}

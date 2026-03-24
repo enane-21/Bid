@@ -1,0 +1,34 @@
+.dashboard {
+    padding: 40px 20px;
+}
+
+.dashboard h1 {
+    margin-bottom: 30px;
+}
+
+.bid-list,
+.product-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.bid-item,
+.product-item {
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid #3498db;
+}
+
+.bid-item h3,
+.product-item h3 {
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.bid-item p,
+.product-item p {
+    margin: 5px 0;
+    color: #666;
+}
