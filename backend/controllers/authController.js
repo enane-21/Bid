@@ -110,7 +110,7 @@ exports.register = async (req, res) => {
             // Generate email verification token
             verificationToken = crypto.randomBytes(32).toString('hex');
             userData.emailVerificationToken = verificationToken;
-            userData.emailVerificationExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+            userData.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
 
             // Suppliers need email verification AND admin approval
             userData.isVerified = false;
@@ -124,11 +124,13 @@ exports.register = async (req, res) => {
         const user = await User.create(userData);
 
         // Send verification email for suppliers
+        let emailResult = { success: false };
         if (role === 'supplier' && verificationToken) {
-            await sendVerificationEmail(user, verificationToken);
+            emailResult = await sendVerificationEmail(user, verificationToken);
         }
 
         const token = generateToken(user._id);
+        const verificationUrl = `${process.env.CLIENT_URL || 'http://localhost:3000'}/verify-email/${verificationToken}`;
 
         res.status(201).json({
             success: true,
@@ -139,7 +141,14 @@ exports.register = async (req, res) => {
                 email: user.email,
                 role: user.role,
                 isApproved: user.isApproved
-            }
+            },
+            ...(role === 'supplier' && {
+                message: emailResult.success
+                    ? 'Registration successful! Please check your email to verify your account.'
+                    : 'Registration successful! Email delivery failed — use the link below to verify.',
+                verificationUrl: emailResult.success ? undefined : verificationUrl,
+                emailSent: emailResult.success
+            })
         });
     } catch (error) {
         console.error('Registration error:', error);
@@ -274,7 +283,7 @@ exports.resendVerification = async (req, res) => {
         // Generate new verification token
         const verificationToken = crypto.randomBytes(32).toString('hex');
         user.emailVerificationToken = verificationToken;
-        user.emailVerificationExpires = Date.now() + 5 * 60 * 1000; // 5 minutes
+        user.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
         await user.save();
 
         // Send verification email

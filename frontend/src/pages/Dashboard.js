@@ -57,14 +57,32 @@ const Dashboard = () => {
         }
     };
 
+    const STATUS_LABELS = {
+        pending: 'Pending',
+        approved_by_director: 'Approved by Department Head',
+        rejected: 'Rejected',
+        checked_by_storekeeper: 'Checked by Storekeeper',
+        budget_verified: 'Budget Verified',
+        arranged: 'Arranged',
+        items_ordered: 'Items Ordered',
+        items_received: 'Items Received',
+        completed: 'Completed',
+        submitted: 'Submitted',
+        won: 'Won',
+        lost: 'Lost',
+    };
+
     const getStatusColor = (status) => {
         const colors = {
             pending: 'bg-yellow-100 text-yellow-800 border-yellow-200',
+            approved_by_director: 'bg-blue-100 text-blue-800 border-blue-200',
             approved: 'bg-green-100 text-green-800 border-green-200',
             rejected: 'bg-red-100 text-red-800 border-red-200',
             submitted: 'bg-blue-100 text-blue-800 border-blue-200',
             won: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-            lost: 'bg-gray-100 text-gray-800 border-gray-200'
+            lost: 'bg-gray-100 text-gray-800 border-gray-200',
+            checked_by_storekeeper: 'bg-purple-100 text-purple-800 border-purple-200',
+            budget_verified: 'bg-green-100 text-green-800 border-green-200',
         };
         return colors[status] || 'bg-gray-100 text-gray-800 border-gray-200';
     };
@@ -144,7 +162,7 @@ const Dashboard = () => {
                                                 {req.title}
                                             </h3>
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(req.status)}`}>
-                                                {req.status}
+                                                {STATUS_LABELS[req.status] || req.status?.replace(/_/g, ' ')}
                                             </span>
                                         </div>
                                         <div className="space-y-2 text-sm text-gray-600">
@@ -197,7 +215,7 @@ const Dashboard = () => {
                                                 {bid.tenderFile?.title || 'Tender'}
                                             </h3>
                                             <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(bid.status)}`}>
-                                                {bid.status}
+                                                {STATUS_LABELS[bid.status] || bid.status?.replace(/_/g, ' ')}
                                             </span>
                                         </div>
                                         <div className="space-y-2 text-sm text-gray-600">

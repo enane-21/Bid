@@ -274,7 +274,16 @@ const Register = () => {
 
             const res = await authAPI.register(formDataToSend);
             login(res.data.token, res.data.user);
-            toast.success('Registration successful! Please check your email to verify your account.');
+
+            if (res.data.emailSent === false && res.data.verificationUrl) {
+                toast.warning('Email delivery failed. Copy this verification link and open it in your browser:');
+                // Show the URL in a persistent way
+                setTimeout(() => {
+                    window.prompt('Copy this verification link:', res.data.verificationUrl);
+                }, 500);
+            } else {
+                toast.success('Registration successful! Please check your email to verify your account.');
+            }
             navigate('/login');
         } catch (error) {
             toast.error(error.response?.data?.message || 'Registration failed');
