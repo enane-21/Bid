@@ -77,9 +77,9 @@ const DepartmentHead = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/approve`,
+                BASE_URL + '/api/requisitions/' + selectedRequisition._id + '/approve',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             toast.success('Requisition approved');
             setShowApprovalModal(false);
@@ -95,9 +95,9 @@ const DepartmentHead = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/reject`,
+                BASE_URL + '/api/requisitions/' + selectedRequisition._id + '/reject',
                 { reason: rejectionReason },
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             toast.success('Requisition rejected');
             setShowRejectModal(false);

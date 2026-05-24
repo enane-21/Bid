@@ -82,7 +82,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/verify-budget`,
+                BASE_URL + '/api/requisitions/' + selectedRequisition._id + '/verify-budget',
                 {
                     ...verificationForm,
                     allocatedAmount: parseFloat(verificationForm.allocatedAmount)
@@ -133,7 +133,7 @@ const FinanceDepartment = () => {
                 remainingBudget: parseFloat(budgetForm.totalBudget) - parseFloat(budgetForm.allocatedBudget)
             };
             await axios.put(
-                `BASE_URL + '/api/budgets/${selectedBudget._id}`,
+                BASE_URL + '/api/budgets/' + selectedBudget._id,
                 dataToSend,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -152,7 +152,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.delete(
-                `BASE_URL + '/api/budgets/${budgetId}`,
+                BASE_URL + '/api/budgets/' + budgetId,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             toast.success('Budget deleted successfully');
@@ -187,7 +187,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/payments/${paymentId}/approve`,
+                BASE_URL + '/api/payments/' + paymentId + '/approve',
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -205,7 +205,7 @@ const FinanceDepartment = () => {
             toast.info('Initializing Chapa payment...', { autoClose: 2000 });
 
             const response = await axios.post(
-                `BASE_URL + '/api/payments/${paymentId}/chapa/initialize`,
+                BASE_URL + '/api/payments/' + paymentId + '/chapa/initialize',
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -277,7 +277,7 @@ const FinanceDepartment = () => {
             toast.info('Verifying payment with Chapa...', { autoClose: 2000 });
 
             const response = await axios.get(
-                `BASE_URL + '/api/payments/chapa/verify/${txRef}`,
+                BASE_URL + '/api/payments/chapa/verify/' + txRef,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -298,7 +298,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/payments/${paymentId}/mark-paid`,
+                BASE_URL + '/api/payments/' + paymentId + '/mark-paid',
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );

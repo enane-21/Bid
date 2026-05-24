@@ -79,9 +79,9 @@ const Messages = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/messages/${messageId}/read`,
+                BASE_URL + '/api/messages/' + messageId + '/read',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             fetchMessages();
         } catch (error) {
@@ -94,8 +94,8 @@ const Messages = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`BASE_URL + '/api/messages/${messageId}`, {
-                headers: { Authorization: `Bearer ${token}` }
+            await axios.delete(BASE_URL + '/api/messages/' + messageId, {
+                headers: { Authorization: 'Bearer ' + token }
             });
             toast.success('Message deleted');
             fetchMessages();

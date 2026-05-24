@@ -81,9 +81,9 @@ const PurchasingTeam = () => {
 
             // Step 1: Arrange the requisition first
             await axios.put(
-                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/arrange`,
+                BASE_URL + '/api/requisitions/' + selectedRequisition._id + '/arrange',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
 
             // Step 2: Create the tender
@@ -131,9 +131,9 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/tenders/${tenderId}/publish`,
+                BASE_URL + '/api/tenders/' + tenderId + '/publish',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             toast.success('Tender published successfully');
             fetchData();
@@ -147,9 +147,9 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/tenders/${tenderId}/disable`,
+                BASE_URL + '/api/tenders/' + tenderId + '/disable',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             toast.success('Tender disabled successfully');
             fetchData();
@@ -162,8 +162,8 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             const res = await axios.get(
-                `BASE_URL + '/api/bids/tender/${tenderId}`,
-                { headers: { Authorization: `Bearer ${token}` } }
+                BASE_URL + '/api/bids/tender/' + tenderId,
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             setBids(res.data.bids || []);
         } catch (error) {
@@ -176,7 +176,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/bids/${selectedBid._id}/evaluate`,
+                BASE_URL + '/api/bids/' + selectedBid._id + '/evaluate',
                 {
                     ...evaluationForm,
                     technicalScore: parseFloat(evaluationForm.technicalScore),
@@ -200,9 +200,9 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `BASE_URL + '/api/bids/${bidId}/announce-winner`,
+                BASE_URL + '/api/bids/' + bidId + '/announce-winner',
                 {},
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: 'Bearer ' + token } }
             );
             toast.success('Winner announced successfully');
             if (selectedTender) {

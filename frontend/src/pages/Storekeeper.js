@@ -103,7 +103,7 @@ const Storekeeper = () => {
 
             if (editingItem) {
                 await axios.put(
-                    `BASE_URL + '/api/storekeeper/inventory/${editingItem._id}`,
+                    BASE_URL + '/api/storekeeper/inventory/' + editingItem._id,
                     dataToSend,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -142,7 +142,7 @@ const Storekeeper = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`BASE_URL + '/api/storekeeper/inventory/${itemId}`, {
+            await axios.delete(BASE_URL + '/api/storekeeper/inventory/' + itemId, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Inventory item deleted successfully');
@@ -157,7 +157,7 @@ const Storekeeper = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `BASE_URL + '/api/storekeeper/check-availability/${selectedRequisition._id}`,
+                BASE_URL + '/api/storekeeper/check-availability/' + selectedRequisition._id,
                 checkData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -182,7 +182,7 @@ const Storekeeper = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `BASE_URL + '/api/storekeeper/receive-items/${selectedRequisition._id}`,
+                BASE_URL + '/api/storekeeper/receive-items/' + selectedRequisition._id,
                 receiptData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
