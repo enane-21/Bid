@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BASE_URL from '../services/baseUrl';
 import axios from 'axios';
 
 const Budgets = () => {
@@ -7,7 +8,7 @@ const Budgets = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/budgets')
+        axios.get(BASE_URL + '/api/budgets')
             .then(res => setBudgets(res.data.budgets || []))
             .catch(() => setError('Failed to load budgets'))
             .finally(() => setLoading(false));

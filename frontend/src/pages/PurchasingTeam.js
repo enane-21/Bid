@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -42,9 +43,9 @@ const PurchasingTeam = () => {
 
             // Fetch requisitions with budget_verified OR arranged status
             const [reqRes, tenderRes, msgRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/requisitions', { headers }),
-                axios.get('http://localhost:5000/api/tenders', { headers }),
-                axios.get('http://localhost:5000/api/messages', { headers })
+                axios.get(BASE_URL + '/api/requisitions', { headers }),
+                axios.get(BASE_URL + '/api/tenders', { headers }),
+                axios.get(BASE_URL + '/api/messages', { headers })
             ]);
 
             // Filter requisitions to show only budget_verified (not yet arranged)
@@ -80,7 +81,7 @@ const PurchasingTeam = () => {
 
             // Step 1: Arrange the requisition first
             await axios.put(
-                `http://localhost:5000/api/requisitions/${selectedRequisition._id}/arrange`,
+                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/arrange`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -107,7 +108,7 @@ const PurchasingTeam = () => {
             }
 
             await axios.post(
-                'http://localhost:5000/api/tenders',
+                BASE_URL + '/api/tenders',
                 formData,
                 {
                     headers: {
@@ -130,7 +131,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/tenders/${tenderId}/publish`,
+                `BASE_URL + '/api/tenders/${tenderId}/publish`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -146,7 +147,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/tenders/${tenderId}/disable`,
+                `BASE_URL + '/api/tenders/${tenderId}/disable`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -161,7 +162,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             const res = await axios.get(
-                `http://localhost:5000/api/bids/tender/${tenderId}`,
+                `BASE_URL + '/api/bids/tender/${tenderId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             setBids(res.data.bids || []);
@@ -175,7 +176,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/bids/${selectedBid._id}/evaluate`,
+                `BASE_URL + '/api/bids/${selectedBid._id}/evaluate`,
                 {
                     ...evaluationForm,
                     technicalScore: parseFloat(evaluationForm.technicalScore),
@@ -199,7 +200,7 @@ const PurchasingTeam = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/bids/${bidId}/announce-winner`,
+                `BASE_URL + '/api/bids/${bidId}/announce-winner`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );

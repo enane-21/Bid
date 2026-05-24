@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
@@ -24,7 +25,7 @@ const Messages = () => {
     const fetchMessages = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/messages', {
+            const res = await axios.get(BASE_URL + '/api/messages', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(res.data);
@@ -38,7 +39,7 @@ const Messages = () => {
     const fetchUsers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/users', {
+            const res = await axios.get(BASE_URL + '/api/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsers(res.data.users || res.data);
@@ -52,7 +53,7 @@ const Messages = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                'http://localhost:5000/api/messages',
+                BASE_URL + '/api/messages',
                 formData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -78,7 +79,7 @@ const Messages = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/messages/${messageId}/read`,
+                `BASE_URL + '/api/messages/${messageId}/read`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -93,7 +94,7 @@ const Messages = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/api/messages/${messageId}`, {
+            await axios.delete(`BASE_URL + '/api/messages/${messageId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Message deleted');

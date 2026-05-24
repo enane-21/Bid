@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
@@ -31,7 +32,7 @@ const DepartmentHead = () => {
     const fetchRequisitions = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/requisitions', {
+            const res = await axios.get(BASE_URL + '/api/requisitions', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setRequisitions(res.data.requisitions || []);
@@ -45,7 +46,7 @@ const DepartmentHead = () => {
     const fetchMessages = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/messages', {
+            const res = await axios.get(BASE_URL + '/api/messages', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setMessages(res.data.messages || []);
@@ -59,7 +60,7 @@ const DepartmentHead = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                'http://localhost:5000/api/requisitions',
+                BASE_URL + '/api/requisitions',
                 { ...formData, quantity: parseInt(formData.quantity), estimatedBudget: parseFloat(formData.estimatedBudget) },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -76,7 +77,7 @@ const DepartmentHead = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/requisitions/${selectedRequisition._id}/approve`,
+                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/approve`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -94,7 +95,7 @@ const DepartmentHead = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/requisitions/${selectedRequisition._id}/reject`,
+                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/reject`,
                 { reason: rejectionReason },
                 { headers: { Authorization: `Bearer ${token}` } }
             );

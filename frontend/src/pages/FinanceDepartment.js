@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -47,12 +48,12 @@ const FinanceDepartment = () => {
             const headers = { Authorization: `Bearer ${token}` };
 
             const [reqRes, budgetRes, paymentRes, msgRes, completedReqRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/requisitions?status=checked_by_storekeeper', { headers }),
-                axios.get('http://localhost:5000/api/budgets', { headers }),
-                axios.get('http://localhost:5000/api/payments', { headers }),
-                axios.get('http://localhost:5000/api/messages', { headers }),
+                axios.get(BASE_URL + '/api/requisitions?status=checked_by_storekeeper', { headers }),
+                axios.get(BASE_URL + '/api/budgets', { headers }),
+                axios.get(BASE_URL + '/api/payments', { headers }),
+                axios.get(BASE_URL + '/api/messages', { headers }),
                 // Fetch requisitions ready for payment (items_ordered or completed)
-                axios.get('http://localhost:5000/api/requisitions', { headers })
+                axios.get(BASE_URL + '/api/requisitions', { headers })
             ]);
 
             setRequisitions(reqRes.data.requisitions || []);
@@ -81,7 +82,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/requisitions/${selectedRequisition._id}/verify-budget`,
+                `BASE_URL + '/api/requisitions/${selectedRequisition._id}/verify-budget`,
                 {
                     ...verificationForm,
                     allocatedAmount: parseFloat(verificationForm.allocatedAmount)
@@ -108,7 +109,7 @@ const FinanceDepartment = () => {
                 remainingBudget: parseFloat(budgetForm.totalBudget) - (parseFloat(budgetForm.allocatedBudget) || 0)
             };
             await axios.post(
-                'http://localhost:5000/api/budgets',
+                BASE_URL + '/api/budgets',
                 dataToSend,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -132,7 +133,7 @@ const FinanceDepartment = () => {
                 remainingBudget: parseFloat(budgetForm.totalBudget) - parseFloat(budgetForm.allocatedBudget)
             };
             await axios.put(
-                `http://localhost:5000/api/budgets/${selectedBudget._id}`,
+                `BASE_URL + '/api/budgets/${selectedBudget._id}`,
                 dataToSend,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -151,7 +152,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.delete(
-                `http://localhost:5000/api/budgets/${budgetId}`,
+                `BASE_URL + '/api/budgets/${budgetId}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             toast.success('Budget deleted successfully');
@@ -166,7 +167,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                'http://localhost:5000/api/payments',
+                BASE_URL + '/api/payments',
                 {
                     ...paymentForm,
                     amount: parseFloat(paymentForm.amount)
@@ -186,7 +187,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/payments/${paymentId}/approve`,
+                `BASE_URL + '/api/payments/${paymentId}/approve`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -204,7 +205,7 @@ const FinanceDepartment = () => {
             toast.info('Initializing Chapa payment...', { autoClose: 2000 });
 
             const response = await axios.post(
-                `http://localhost:5000/api/payments/${paymentId}/chapa/initialize`,
+                `BASE_URL + '/api/payments/${paymentId}/chapa/initialize`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -276,7 +277,7 @@ const FinanceDepartment = () => {
             toast.info('Verifying payment with Chapa...', { autoClose: 2000 });
 
             const response = await axios.get(
-                `http://localhost:5000/api/payments/chapa/verify/${txRef}`,
+                `BASE_URL + '/api/payments/chapa/verify/${txRef}`,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
 
@@ -297,7 +298,7 @@ const FinanceDepartment = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/payments/${paymentId}/mark-paid`,
+                `BASE_URL + '/api/payments/${paymentId}/mark-paid`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import BASE_URL from '../services/baseUrl';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { requisitionAPI, bidAPI } from '../services/api';
@@ -30,11 +31,12 @@ const Dashboard = () => {
             }
 
             if (user.role === 'storekeeper') {
+                const headers = { Authorization: 'Bearer ' + token };
                 const [invRes, checksRes, receiptsRes, statsRes] = await Promise.all([
-                    axios.get('http://localhost:5000/api/storekeeper/inventory', { headers: { Authorization: `Bearer ${token}` } }),
-                    axios.get('http://localhost:5000/api/storekeeper/pending-checks', { headers: { Authorization: `Bearer ${token}` } }),
-                    axios.get('http://localhost:5000/api/storekeeper/pending-receipts', { headers: { Authorization: `Bearer ${token}` } }),
-                    axios.get('http://localhost:5000/api/storekeeper/dashboard', { headers: { Authorization: `Bearer ${token}` } }),
+                    axios.get(BASE_URL + '/api/storekeeper/inventory', { headers }),
+                    axios.get(BASE_URL + '/api/storekeeper/pending-checks', { headers }),
+                    axios.get(BASE_URL + '/api/storekeeper/pending-receipts', { headers }),
+                    axios.get(BASE_URL + '/api/storekeeper/dashboard', { headers }),
                 ]);
                 const inventory = invRes.data.inventory || [];
                 // Flatten all history entries across all items, sort newest first

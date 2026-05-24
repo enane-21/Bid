@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -57,7 +58,7 @@ const Storekeeper = () => {
     const fetchInventory = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/storekeeper/inventory', {
+            const res = await axios.get(BASE_URL + '/api/storekeeper/inventory', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setInventory(res.data.inventory || []);
@@ -69,7 +70,7 @@ const Storekeeper = () => {
     const fetchPendingChecks = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/storekeeper/pending-checks', {
+            const res = await axios.get(BASE_URL + '/api/storekeeper/pending-checks', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPendingChecks(res.data.requisitions || []);
@@ -81,7 +82,7 @@ const Storekeeper = () => {
     const fetchPendingReceipts = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/storekeeper/pending-receipts', {
+            const res = await axios.get(BASE_URL + '/api/storekeeper/pending-receipts', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setPendingReceipts(res.data.requisitions || []);
@@ -101,14 +102,14 @@ const Storekeeper = () => {
 
             if (editingItem) {
                 await axios.put(
-                    `http://localhost:5000/api/storekeeper/inventory/${editingItem._id}`,
+                    `BASE_URL + '/api/storekeeper/inventory/${editingItem._id}`,
                     dataToSend,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
                 toast.success('Inventory item updated successfully');
             } else {
                 await axios.post(
-                    'http://localhost:5000/api/storekeeper/inventory',
+                    BASE_URL + '/api/storekeeper/inventory',
                     dataToSend,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -140,7 +141,7 @@ const Storekeeper = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/api/storekeeper/inventory/${itemId}`, {
+            await axios.delete(`BASE_URL + '/api/storekeeper/inventory/${itemId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('Inventory item deleted successfully');
@@ -155,7 +156,7 @@ const Storekeeper = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/api/storekeeper/check-availability/${selectedRequisition._id}`,
+                `BASE_URL + '/api/storekeeper/check-availability/${selectedRequisition._id}`,
                 checkData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -180,7 +181,7 @@ const Storekeeper = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                `http://localhost:5000/api/storekeeper/receive-items/${selectedRequisition._id}`,
+                `BASE_URL + '/api/storekeeper/receive-items/${selectedRequisition._id}`,
                 receiptData,
                 { headers: { Authorization: `Bearer ${token}` } }
             );

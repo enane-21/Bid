@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -30,8 +31,8 @@ const Supplier = () => {
             const headers = { Authorization: `Bearer ${token}` };
 
             const [tendersRes, bidsRes] = await Promise.all([
-                axios.get('http://localhost:5000/api/tenders', { headers }),
-                axios.get('http://localhost:5000/api/bids/supplier', { headers })
+                axios.get(BASE_URL + '/api/tenders', { headers }),
+                axios.get(BASE_URL + '/api/bids/supplier', { headers })
             ]);
 
             // Filter to show only published and active tenders (backend already filters for suppliers)
@@ -53,7 +54,7 @@ const Supplier = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.post(
-                'http://localhost:5000/api/bids',
+                BASE_URL + '/api/bids',
                 {
                     tenderFileId: selectedTender._id,
                     financialProposal: {

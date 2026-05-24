@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import BASE_URL from '../services/baseUrl';
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 
@@ -8,7 +9,7 @@ const Home = () => {
     const [stats, setStats] = useState({ activeUsers: null, tendersProcessed: null, totalBids: null });
 
     useEffect(() => {
-        fetch('http://localhost:5000/api/stats')
+        fetch(BASE_URL + '/api/stats')
             .then(res => res.json())
             .then(data => { if (data.success) setStats(data); })
             .catch(() => { });

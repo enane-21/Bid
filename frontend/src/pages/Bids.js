@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BASE_URL from '../services/baseUrl';
 import axios from 'axios';
 
 const STATUS_COLORS = {
@@ -18,7 +19,7 @@ const Bids = () => {
     const [filter, setFilter] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/bids')
+        axios.get(BASE_URL + '/api/bids')
             .then(res => setBids(res.data.bids || []))
             .catch(() => setError('Failed to load bids'))
             .finally(() => setLoading(false));

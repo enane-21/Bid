@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -30,7 +31,7 @@ const PaymentSuccess = () => {
                 // Verify payment with backend
                 const token = localStorage.getItem('token');
                 const response = await axios.get(
-                    `http://localhost:5000/api/payments/chapa/verify/${txRef}`,
+                    `BASE_URL + '/api/payments/chapa/verify/${txRef}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
 

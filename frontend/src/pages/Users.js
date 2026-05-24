@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import BASE_URL from '../services/baseUrl';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 
@@ -32,7 +33,7 @@ const Users = () => {
     const fetchUsers = async () => {
         try {
             const token = localStorage.getItem('token');
-            const res = await axios.get('http://localhost:5000/api/users', {
+            const res = await axios.get(BASE_URL + '/api/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             const userData = res.data.users || res.data;
@@ -58,7 +59,7 @@ const Users = () => {
             if (editingUser) {
                 // Update user
                 await axios.put(
-                    `http://localhost:5000/api/users/${editingUser._id}`,
+                    `BASE_URL + '/api/users/${editingUser._id}`,
                     formData,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -66,7 +67,7 @@ const Users = () => {
             } else {
                 // Create user
                 await axios.post(
-                    'http://localhost:5000/api/users/create',
+                    BASE_URL + '/api/users/create',
                     formData,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
@@ -85,7 +86,7 @@ const Users = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/users/${userId}/approve`,
+                `BASE_URL + '/api/users/${userId}/approve`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -100,7 +101,7 @@ const Users = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/users/${userId}/verify`,
+                `BASE_URL + '/api/users/${userId}/verify`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -118,7 +119,7 @@ const Users = () => {
         try {
             const token = localStorage.getItem('token');
             await axios.put(
-                `http://localhost:5000/api/users/${userId}/toggle-status`,
+                `BASE_URL + '/api/users/${userId}/toggle-status`,
                 {},
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -148,7 +149,7 @@ const Users = () => {
 
         try {
             const token = localStorage.getItem('token');
-            await axios.delete(`http://localhost:5000/api/users/${userId}`, {
+            await axios.delete(`BASE_URL + '/api/users/${userId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             toast.success('User deleted successfully');

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import BASE_URL from '../services/baseUrl';
 import axios from 'axios';
 
 const STATUS_COLORS = {
@@ -32,7 +33,7 @@ const Requisitions = () => {
     const [filter, setFilter] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/requisitions')
+        axios.get(BASE_URL + '/api/requisitions')
             .then(res => setRequisitions(res.data.requisitions || []))
             .catch(() => setError('Failed to load requisitions'))
             .finally(() => setLoading(false));
