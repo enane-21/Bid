@@ -12,10 +12,10 @@ const FinanceDepartment = () => {
     const [activeTab, setActiveTab] = useState('requisitions');
     const [showVerificationModal, setShowVerificationModal] = useState(false);
     const [showBudgetModal, setShowBudgetModal] = useState(false);
-    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [showPaymentModal, setShowPaymentModal] = useState(false); // eslint-disable-line no-unused-vars
     const [selectedRequisition, setSelectedRequisition] = useState(null);
     const [selectedBudget, setSelectedBudget] = useState(null);
-    const [selectedPayment, setSelectedPayment] = useState(null);
+    const [selectedPayment, setSelectedPayment] = useState(null); // eslint-disable-line no-unused-vars
     const [verificationForm, setVerificationForm] = useState({
         isApproved: true,
         allocatedAmount: '',
@@ -162,7 +162,7 @@ const FinanceDepartment = () => {
         }
     };
 
-    const handleCreatePayment = async (e) => {
+    const handleCreatePayment = async (e) => { // eslint-disable-line no-unused-vars
         e.preventDefault();
         try {
             const token = localStorage.getItem('token');

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import BASE_URL from '../services/baseUrl';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -18,7 +17,7 @@ const VerifyEmail = () => {
 
     const verifyEmail = async () => {
         try {
-            const res = await axios.get(`BASE_URL + '/api/auth/verify-email/${token}`);
+            const res = await axios.get(BASE_URL + '/api/auth/verify-email/' + token);
             setVerified(true);
             toast.success(res.data.message);
             setTimeout(() => {

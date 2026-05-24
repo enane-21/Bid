@@ -11,9 +11,8 @@ const Dashboard = () => {
     const [storekeepData, setStorekeeperData] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => { fetchData(); }, []);
 
     const fetchData = async () => {
         try {

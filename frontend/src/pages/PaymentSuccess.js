@@ -31,8 +31,8 @@ const PaymentSuccess = () => {
                 // Verify payment with backend
                 const token = localStorage.getItem('token');
                 const response = await axios.get(
-                    `BASE_URL + '/api/payments/chapa/verify/${txRef}`,
-                    { headers: { Authorization: `Bearer ${token}` } }
+                    BASE_URL + '/api/payments/chapa/verify/' + txRef,
+                    { headers: { Authorization: 'Bearer ' + token } }
                 );
 
                 setPaymentStatus({
