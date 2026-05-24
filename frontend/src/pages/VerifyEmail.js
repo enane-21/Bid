@@ -17,7 +17,7 @@ const VerifyEmail = () => {
 
     const verifyEmail = async () => {
         try {
-            const res = await axios.get(BASE_URL + '/api/auth/verify-email/' + token);
+            const res = await axios.get((process.env.REACT_APP_API_URL || 'http://localhost:5000/api').replace('/api', '') + '/api/auth/verify-email/' + token);
             setVerified(true);
             toast.success(res.data.message);
             setTimeout(() => {
