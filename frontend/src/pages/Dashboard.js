@@ -100,27 +100,27 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-8">
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 py-4 sm:py-8">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Welcome Section */}
                 <div className="mb-8">
-                    <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                    <h1 className="text-2xl sm:text-4xl font-bold text-gray-900 mb-2">
                         Welcome back, {user?.name}! 👋
                     </h1>
-                    <p className="text-gray-600 text-lg">Here's what's happening with your account today.</p>
+                    <p className="text-gray-600 text-base sm:text-lg">Here's what's happening with your account today.</p>
                 </div>
 
                 {/* User Info Card */}
-                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-8 mb-8 text-white">
-                    <div className="flex items-center space-x-6">
+                <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl p-6 sm:p-8 mb-8 text-white">
+                    <div className="flex items-center space-x-4 sm:space-x-6">
                         <div className="flex-shrink-0">
-                            <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-3xl">
+                            <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-2xl sm:text-3xl">
                                 {user?.role === 'supplier' ? '🏢' : user?.role === 'administrator' ? '⚙️' : '👤'}
                             </div>
                         </div>
-                        <div className="flex-1">
-                            <h2 className="text-2xl font-bold mb-2">{user?.name}</h2>
-                            <div className="flex flex-wrap gap-4 text-indigo-100">
+                        <div className="flex-1 min-w-0">
+                            <h2 className="text-xl sm:text-2xl font-bold mb-2 truncate">{user?.name}</h2>
+                            <div className="flex flex-wrap gap-2 sm:gap-4 text-indigo-100">
                                 <div className="flex items-center">
                                     <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
@@ -141,9 +141,9 @@ const Dashboard = () => {
 
                 {/* Requisitions Section */}
                 {(user?.role === 'user' || user?.role === 'administrator' || user?.role === 'department_head' || user?.role === 'purchasing_team') && (
-                    <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                    <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 mb-8">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold text-gray-900">
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                                 📋 Requisitions
                             </h2>
                             <span className="px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full font-semibold">
@@ -158,11 +158,11 @@ const Dashboard = () => {
                                         key={req._id}
                                         className="group bg-gradient-to-br from-white to-gray-50 border-2 border-gray-200 rounded-xl p-6 hover:shadow-xl hover:border-indigo-300 transition-all duration-300 transform hover:-translate-y-1"
                                     >
-                                        <div className="flex items-start justify-between mb-4">
-                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
+                                        <div className="flex items-start justify-between mb-4 gap-2">
+                                            <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">
                                                 {req.title}
                                             </h3>
-                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(req.status)}`}>
+                                            <span className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(req.status)}`}>
                                                 {STATUS_LABELS[req.status] || req.status?.replace(/_/g, ' ')}
                                             </span>
                                         </div>
@@ -194,9 +194,9 @@ const Dashboard = () => {
 
                 {/* Bids Section */}
                 {user?.role === 'supplier' && (
-                    <div className="bg-white rounded-2xl shadow-lg p-8">
+                    <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-2xl font-bold text-gray-900">
+                            <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
                                 💼 My Bids
                             </h2>
                             <span className="px-4 py-2 bg-purple-100 text-purple-800 rounded-full font-semibold">
@@ -211,11 +211,11 @@ const Dashboard = () => {
                                         key={bid._id}
                                         className="group bg-gradient-to-br from-white to-purple-50 border-2 border-purple-200 rounded-xl p-6 hover:shadow-xl hover:border-purple-400 transition-all duration-300 transform hover:-translate-y-1"
                                     >
-                                        <div className="flex items-start justify-between mb-4">
-                                            <h3 className="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                                        <div className="flex items-start justify-between mb-4 gap-2">
+                                            <h3 className="text-base sm:text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
                                                 {bid.tenderFile?.title || 'Tender'}
                                             </h3>
-                                            <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(bid.status)}`}>
+                                            <span className={`flex-shrink-0 px-3 py-1 rounded-full text-xs font-semibold border ${getStatusColor(bid.status)}`}>
                                                 {STATUS_LABELS[bid.status] || bid.status?.replace(/_/g, ' ')}
                                             </span>
                                         </div>
@@ -253,28 +253,28 @@ const Dashboard = () => {
                 {user?.role === 'storekeeper' && storekeepData && (
                     <>
                         {/* Stats */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-8">
                             {[
                                 { label: 'Total Items', value: storekeepData.inventory.length, color: 'border-indigo-500', bg: 'bg-indigo-100', icon: '📦' },
                                 { label: 'In Stock', value: storekeepData.inventory.filter(i => i.quantity >= 10).length, color: 'border-green-500', bg: 'bg-green-100', icon: '✅' },
                                 { label: 'Pending Checks', value: storekeepData.pendingChecks.length, color: 'border-yellow-500', bg: 'bg-yellow-100', icon: '🔍' },
                                 { label: 'Pending Receipts', value: storekeepData.pendingReceipts.length, color: 'border-purple-500', bg: 'bg-purple-100', icon: '📬' },
                             ].map((s, i) => (
-                                <div key={i} className={`bg-white rounded-2xl shadow-lg p-6 border-l-4 ${s.color}`}>
+                                <div key={i} className={`bg-white rounded-2xl shadow-lg p-4 sm:p-6 border-l-4 ${s.color}`}>
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <p className="text-sm font-medium text-gray-600">{s.label}</p>
-                                            <p className="text-3xl font-bold text-gray-900 mt-2">{s.value}</p>
+                                            <p className="text-xs sm:text-sm font-medium text-gray-600">{s.label}</p>
+                                            <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{s.value}</p>
                                         </div>
-                                        <div className={`${s.bg} rounded-full p-3 text-2xl`}>{s.icon}</div>
+                                        <div className={`${s.bg} rounded-full p-2 sm:p-3 text-xl sm:text-2xl`}>{s.icon}</div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
                         {/* Inventory Management */}
-                        <div className="bg-white rounded-2xl shadow-lg p-8 mb-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">📦 Inventory Management</h2>
+                        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 mb-6">
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">📦 Inventory Management</h2>
                             {storekeepData.inventory.length === 0 ? (
                                 <p className="text-gray-400 text-center py-6">No inventory items registered yet</p>
                             ) : (
@@ -312,14 +312,14 @@ const Dashboard = () => {
                         </div>
 
                         {/* Requisition Checks */}
-                        <div className="bg-white rounded-2xl shadow-lg p-8 mb-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">🔍 Requisition Checks — Pending Availability</h2>
+                        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 mb-6">
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">🔍 Requisition Checks</h2>
                             {storekeepData.pendingChecks.length === 0 ? (
                                 <p className="text-gray-400 text-center py-6">No requisitions pending availability check</p>
                             ) : (
                                 <div className="space-y-3">
                                     {storekeepData.pendingChecks.map(req => (
-                                        <div key={req._id} className="flex items-center justify-between p-4 border border-yellow-200 bg-yellow-50 rounded-xl">
+                                        <div key={req._id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 border border-yellow-200 bg-yellow-50 rounded-xl">
                                             <div>
                                                 <p className="font-semibold text-gray-900">{req.title}</p>
                                                 <p className="text-sm text-gray-500">{req.category} · Qty: {req.quantity} · By: {req.requestedBy?.name}</p>
@@ -332,14 +332,14 @@ const Dashboard = () => {
                         </div>
 
                         {/* Pending Receipts */}
-                        <div className="bg-white rounded-2xl shadow-lg p-8 mb-6">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">📬 Item Receipts — Pending from Suppliers</h2>
+                        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8 mb-6">
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">📬 Pending Receipts</h2>
                             {storekeepData.pendingReceipts.length === 0 ? (
                                 <p className="text-gray-400 text-center py-6">No items pending receipt</p>
                             ) : (
                                 <div className="space-y-3">
                                     {storekeepData.pendingReceipts.map(req => (
-                                        <div key={req._id} className="flex items-center justify-between p-4 border border-purple-200 bg-purple-50 rounded-xl">
+                                        <div key={req._id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-4 border border-purple-200 bg-purple-50 rounded-xl">
                                             <div>
                                                 <p className="font-semibold text-gray-900">{req.title}</p>
                                                 <p className="text-sm text-gray-500">{req.category} · Qty Ordered: {req.quantity} · By: {req.requestedBy?.name}</p>
@@ -352,8 +352,8 @@ const Dashboard = () => {
                         </div>
 
                         {/* Recent Activity Log */}
-                        <div className="bg-white rounded-2xl shadow-lg p-8">
-                            <h2 className="text-xl font-bold text-gray-900 mb-4">🕒 Recent Activities</h2>
+                        <div className="bg-white rounded-2xl shadow-lg p-4 sm:p-8">
+                            <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-4">🕒 Recent Activities</h2>
                             {storekeepData.activities.length === 0 ? (
                                 <p className="text-gray-400 text-center py-6">No activities recorded yet</p>
                             ) : (
@@ -373,11 +373,11 @@ const Dashboard = () => {
                                                         {cfg.icon}
                                                     </div>
                                                     <div className="flex-1 min-w-0">
-                                                        <div className="flex items-center justify-between">
+                                                        <div className="flex items-start justify-between gap-2">
                                                             <p className="text-sm font-semibold text-gray-900">
                                                                 {cfg.label} — <span className="text-indigo-600">{act.itemName}</span>
                                                             </p>
-                                                            <span className="text-xs text-gray-400 ml-4 whitespace-nowrap">
+                                                            <span className="text-xs text-gray-400 whitespace-nowrap flex-shrink-0">
                                                                 {act.date ? new Date(act.date).toLocaleString() : '—'}
                                                             </span>
                                                         </div>
