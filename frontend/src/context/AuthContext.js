@@ -3,6 +3,8 @@ import axios from 'axios';
 
 export const AuthContext = createContext();
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
@@ -10,7 +12,7 @@ export const AuthProvider = ({ children }) => {
 
     const fetchUser = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/auth/profile');
+            const res = await axios.get(API_URL + '/auth/profile');
             setUser(res.data.user);
         } catch (error) {
             // Only log non-401 errors (401 is expected when not logged in)
